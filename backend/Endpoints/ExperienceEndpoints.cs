@@ -10,7 +10,7 @@ public static class ExperienceEndpoints
         // GET /experiences
         app.MapGet(
                 "/experiences",
-                async (ICvService cvService) =>
+                (ICvService cvService) =>
                 {
                     // TODO: Oppgave 2
 
@@ -23,7 +23,7 @@ public static class ExperienceEndpoints
         // GET /experiences/{id}
         app.MapGet(
                 "/experiences/{id:guid}",
-                async (Guid id, ICvService cvService) =>
+                (Guid id, ICvService cvService) =>
                 {
                     // TODO: Oppgave 2
 
@@ -36,7 +36,7 @@ public static class ExperienceEndpoints
         // GET /experiences/type/{type}
         app.MapGet(
                 "/experiences/type/{type}",
-                async (string type, ICvService cvService) =>
+                (string type, ICvService cvService) =>
                 {
                     // TODO: Oppgave 3
 
