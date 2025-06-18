@@ -1,4 +1,6 @@
-﻿using backend.Data;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json;
+using backend.Data;
 using backend.Data.Mappers;
 using backend.Data.Models;
 using backend.Data.Requests;
@@ -36,8 +38,6 @@ public class CvService(AppDbContext context) : ICvService
     public async Task<IEnumerable<User>> GetUsersWithDesiredSkillsAsync(IEnumerable<string> desiredTechnologies)
     {
         var users = await context.Users.ToListAsync();
-        var x = users.Select(u => u.Skills.ToList()).ToList();
-        Console.WriteLine("Skills: \n" + x.ToString() + "\n");
-        return users;
+        return users.Where(u => desiredTechnologies.All(u.Skills.ToString().Split(';').Contains));
     }
 }
