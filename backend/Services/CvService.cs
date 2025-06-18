@@ -40,4 +40,9 @@ public class CvService(AppDbContext context) : ICvService
         var users = await context.Users.ToListAsync();
         return users.Where(u => desiredTechnologies.All(u.Skills.ToString().Split(';').Contains));
     }
+
+    public async Task<IEnumerable<Experience>> GetExperiencesByUserAsync(Guid userId) 
+    {
+        return await context.Experiences.Where(e => e.UserId == userId).ToListAsync();
+    }
 }

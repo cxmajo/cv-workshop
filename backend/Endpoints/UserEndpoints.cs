@@ -48,6 +48,17 @@ public static class UserEndpoints
             )
             .WithName("GetUsersWithDesiredSkill")
             .WithTags("Users");
+
+        app.MapGet(
+            "/users/{id:guid}/experiences",
+            async (Guid id, ICvService cvService) =>
+            {
+                var experiences = await cvService.GetExperiencesByUserAsync(id);
+                return Results.Ok(experiences);
+            }
+        )
+        .WithName("GetExperiencesByUser")
+        .WithTags("Users");
     }
     
 
