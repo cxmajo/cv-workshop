@@ -12,9 +12,7 @@ public static class ExperienceEndpoints
                 "/experiences",
                 (ICvService cvService) =>
                 {
-                    // TODO: Oppgave 2
-
-                    return Results.Ok();
+                    return cvService.GetAllExperiencesAsync();
                 }
             )
             .WithName("GetAllExperiences")
@@ -25,9 +23,7 @@ public static class ExperienceEndpoints
                 "/experiences/{id:guid}",
                 (Guid id, ICvService cvService) =>
                 {
-                    // TODO: Oppgave 2
-
-                    return Results.Ok();
+                    return cvService.GetExperienceByIdAsync(id);
                 }
             )
             .WithName("GetExperienceById")
@@ -38,9 +34,7 @@ public static class ExperienceEndpoints
                 "/experiences/type/{type}",
                 (string type, ICvService cvService) =>
                 {
-                    // TODO: Oppgave 3
-
-                    return Results.Ok();
+                    return cvService.GetExperiencesByTypeAsync(type);
                 }
             )
             .WithName("GetExperiencesByType")

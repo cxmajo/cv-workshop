@@ -23,21 +23,8 @@ public static class UserEndpoints
             .WithName("GetAllUsers")
             .WithTags("Users");
 
+
         // GET /users/{id}
-        // TODO: Oppgave 1: skriv et endepunkt for å hente ut riktig bruker
-
-        // Retrieve all cvs that include any of the wanted skills
-        app.MapPost(
-                "/users/skills",
-                async () =>
-                {
-                    // TODO: Oppgave 4
-                    return Results.Ok();
-                }
-            )
-            .WithName("GetUsersWithDesiredSkill")
-            .WithTags("Users");
-
         app.MapGet(
             "/users/{id:guid}",
             async (Guid id, ICvService cvService) =>
@@ -48,6 +35,20 @@ public static class UserEndpoints
         )
         .WithName("GetUserById")
         .WithTags("Users");
+
+
+                // Retrieve all cvs that include any of the wanted skills
+        app.MapPost(
+                "/users/skills",
+                async (ICvService cvService, SkillRequest request) =>
+                {
+                    var users = await cvService.GetUsersWithDesiredSkillsAsync(request.WantedSkills);
+                    return Results.Ok(users);
+                }
+            )
+            .WithName("GetUsersWithDesiredSkill")
+            .WithTags("Users");
     }
+    
 
 }

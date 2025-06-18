@@ -1,6 +1,7 @@
 ﻿using backend.Data;
 using backend.Data.Mappers;
 using backend.Data.Models;
+using backend.Data.Requests;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Services;
@@ -17,28 +18,26 @@ public class CvService(AppDbContext context) : ICvService
         return await context.Users.FindAsync(id);
     }
 
-    // TODO: Oppgave 1
-
-
     public async Task<IEnumerable<Experience>> GetAllExperiencesAsync()
     {
-        // TODO: Oppgave 2
-        return [];
+        return await context.Experiences.OrderBy(e => e.StartDate).ToListAsync();
     }
 
     public async Task<Experience?> GetExperienceByIdAsync(Guid id)
     {
-        // TODO: Oppgave 2
-
-        return null;
+        return await context.Experiences.FindAsync(id);
     }
 
     public async Task<IEnumerable<Experience>> GetExperiencesByTypeAsync(string type)
     {
-        // TODO: Oppgave 3
-
-        return [];
+        return await context.Experiences.Where(e => e.Type == type).OrderBy(e => e.StartDate).ToListAsync();
     }
 
-    // TODO: Oppgave 4 ny metode (husk å legge den til i interfacet)
+    public async Task<IEnumerable<User>> GetUsersWithDesiredSkillsAsync(IEnumerable<string> desiredTechnologies)
+    {
+        var users = await context.Users.ToListAsync();
+        var x = users.Select(u => u.Skills.ToList()).ToList();
+        Console.WriteLine("Skills: \n" + x.ToString() + "\n");
+        return users;
+    }
 }
