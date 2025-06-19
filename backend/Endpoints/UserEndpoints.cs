@@ -15,7 +15,7 @@ public static class UserEndpoints
                 async (ICvService cvService) =>
                 {
                     var users = await cvService.GetAllUsersAsync();
-                    var userDtos = users.Select(u => u.ToDto()).ToList();
+                    var userDtos = users.Select(u => UserMapper.ToDto(u)).ToList();
 
                     return Results.Ok(userDtos);
                 }
@@ -49,12 +49,13 @@ public static class UserEndpoints
             .WithName("GetUsersWithDesiredSkill")
             .WithTags("Users");
 
+        // GET /users/{id:guid}/experiences -> return the user with the experiences
         app.MapGet(
             "/users/{id:guid}/experiences",
             async (Guid id, ICvService cvService) =>
             {
-                var experiences = await cvService.GetExperiencesByUserAsync(id);
-                return Results.Ok(experiences);
+                var user = await cvService.GetExperiencesByUserAsync(id);
+                return Results.Ok(user);
             }
         )
         .WithName("GetExperiencesByUser")

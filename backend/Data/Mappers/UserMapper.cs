@@ -5,7 +5,7 @@ namespace backend.Data.Mappers;
 
 public static class UserMapper
 {
-    public static UserDto ToDto(this User user) =>
+    public static UserDto ToDto(this User user, IEnumerable<Experience>? experiences = null) =>
         new(
             Id: user.Id,
             Name: user.Name,
@@ -16,7 +16,8 @@ public static class UserMapper
             Description: user.Description,
             University: user.University,
             Skills: ParseUserSkills(user.Skills),
-            ImageUrl: user.ImageUrl
+            ImageUrl: user.ImageUrl,
+            Experiences: experiences != null ? experiences.Select(e => e.ToDto()).ToList() : new List<ExperienceDto>()
         );
 
     public static IEnumerable<Skill> ParseUserSkills(string skills) =>

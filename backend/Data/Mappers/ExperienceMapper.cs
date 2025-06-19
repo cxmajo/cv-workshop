@@ -5,25 +5,30 @@ namespace backend.Data.Mappers;
 
 public static class ExperienceMapper
 {
-        public enum ExperienceType
-    {
-        Education,
-        Work,
-        Coach,
-        HobbyProject,
-        Voluntary
-    }
     public static ExperienceDto ToDto(this Experience experience) =>
         new(
             Id: experience.Id,
             UserId: experience.UserId,
             Title: experience.Title,
             Role: experience.Role,
-            Type: experience.Type,  
+            Type: ToExperienceType(experience.Type),  
             StartDate: experience.StartDate,
             EndDate: experience.EndDate,
             Description: experience.Description,
             ImageUrl: experience.ImageUrl,
             Company: experience.Company
         );
+
+    public static ExperienceType ToExperienceType(string type)
+    {
+        if (Enum.TryParse<ExperienceType>(type, out var result))
+        {
+            return result;
+        }
+        else
+        {
+            return ExperienceType.Other;
+        }
+    }
+
 }

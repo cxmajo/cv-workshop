@@ -1,4 +1,5 @@
 ﻿using backend.Data.Models;
+using backend.DTOs;
 
 namespace backend.Services;
 
@@ -12,6 +13,5 @@ public interface ICvService
     Task<IEnumerable<Experience>> GetAllExperiencesAsync();
     Task<Experience?> GetExperienceByIdAsync(Guid id);
     Task<IEnumerable<Experience>> GetExperiencesByTypeAsync(string type);
-
-    Task<IEnumerable<Experience>> GetExperiencesByUserAsync(Guid userId);
+    Task<UserDto?> GetExperiencesByUserAsync(Guid userId);
 }

@@ -4,6 +4,7 @@ using backend.Data;
 using backend.Data.Mappers;
 using backend.Data.Models;
 using backend.Data.Requests;
+using backend.DTOs;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Services;
@@ -41,8 +42,13 @@ public class CvService(AppDbContext context) : ICvService
         return users.Where(u => desiredTechnologies.All(u.Skills.ToString().Split(';').Contains));
     }
 
-    public async Task<IEnumerable<Experience>> GetExperiencesByUserAsync(Guid userId) 
+    public async Task<UserDto?> GetExperiencesByUserAsync(Guid userId) 
     {
-        return await context.Experiences.Where(e => e.UserId == userId).ToListAsync();
+        // find the user and their experiences by doing two database queries
+        var experiences = await context.Experiences.Where(e => e.UserId == userId).ToListAsync();
+        var user = await context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+        // return the user with the experiences
+        return user != null ? UserMapper.ToDto(user, experiences) : null;
     }
 }
