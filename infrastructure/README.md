@@ -126,3 +126,5 @@ Alternativt kan du installere disse hvis du vil kjøre lokalt senere:
 
 - [Docker](https://docs.docker.com/desktop/features/wsl)
 - [Terraform](https://developer.hashicorp.com/terraform/install#linux)
+
+tester tester 1-2-3
